@@ -6,7 +6,7 @@ metadata:
 spec:
   destination:
     server: https://kubernetes.default.svc  # Aponta para o cluster Kubernetes padrão
-    namespace: openmetadata-prd            # Namespace onde os recursos serão implantados
+    namespace: openmetadata            # Namespace onde os recursos serão implantados
   source:
     repoURL: https://github.com/brunobaltazar/openmetadata # URL do seu repositório
     path: helm                                            # Caminho dentro do repositório (raiz no seu caso)
