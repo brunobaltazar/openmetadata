@@ -1,0 +1,64 @@
+replicaCount: 2  # Número de réplicas do OpenMetadata
+
+# Configuração principal do OpenMetadata
+openmetadata:
+  config:
+    logLevel: INFO
+    clusterName: openmetadata
+    openmetadata:
+      host: "0.0.0.0"
+      uri: "http://openmetadata:8585"
+      port: 8585
+      adminPort: 8586
+    elasticsearch:
+      enabled: true
+      host: opensearch-cluster-master.openmetadata.svc.cluster.local # Nome do serviço OpenSearch criado
+
+      searchType: opensearch
+      port: 9200
+      scheme: http
+    database:
+      enabled: true
+      host: terraform-20250128150822794000000001.c1yeq4884797.us-east-1.rds.amazonaws.com # Substitua pelo endpoint do seu banco de dados PostgreSQL
+      port: 5432
+      driverClass: org.postgresql.Driver
+      dbScheme: postgresql
+      databaseName: openmetadata  # Nome do banco de dados
+      auth:
+        username: "devops"
+        password:
+          secretRef: "postgres-secrets"
+          secretKey: "openmetadata-postgres-password"
+      dbParams: "ssl=true&sslmode=require"
+      maxSize: 50
+      minSize: 10
+      initialSize: 10
+      checkConnectionWhileIdle: true
+      checkConnectionOnBorrow: true
+
+    # Desativa o cliente de pipeline (Airflow)
+    pipelineServiceClientConfig:
+      enabled: false  # Sem dependência do Airflow
+
+# Recursos de CPU/Memória
+resources:
+  requests:
+    cpu: "1"
+    memory: "2Gi"
+  limits:
+    cpu: "2"
+    memory: "4Gi"
+
+# Ingress para acesso (opcional)
+ingress:
+  enabled: false
+
+# MySQL desativado
+mysql:
+  enabled: false
+
+# Airflow desativado
+airflow:
+  enabled: false
+
+
