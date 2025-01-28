@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: openmetadata  # Nome da aplicação no Argo CD
+  namespace: argocd       # Namespace onde o Argo CD está instalado
+spec:
+  destination:
+    server: https://kubernetes.default.svc  # Aponta para o cluster Kubernetes padrão
+    namespace: openmetadata-prd            # Namespace onde os recursos serão implantados
+  source:
+    repoURL: https://github.com/brunobaltazar/openmetadata # URL do seu repositório
+    path: helm                                            # Caminho dentro do repositório (raiz no seu caso)
+    targetRevision: main                                  # Branch ou tag que deseja sincronizar
+    helm:
+      valueFiles:
+        - values-openmetadata-external.yaml                                 # Arquivo de valores principal
+  project: default                                        # Projeto do Argo CD (default se não configurado outro)
+  syncPolicy:
+    automated:
+      prune: true                                         # Remove recursos que não estão mais no repositório
+      selfHeal: true                                      # Corrige recursos divergentes automaticamente
+    syncOptions:
+      - CreateNamespace=true                              # Cria o namespace automaticamente, se não existir
+      - ServerSideApply=true                              # Aplica recursos do lado do servidor
