@@ -9,7 +9,7 @@ spec:
     namespace: openmetadata            # Namespace onde os recursos serão implantados
   source:
     repoURL: https://github.com/brunobaltazar/openmetadata # URL do seu repositório
-    path: helm                                            # Caminho dentro do repositório (raiz no seu caso)
+    path: openmetadata                                            # Caminho dentro do repositório (raiz no seu caso)
     targetRevision: main                                  # Branch ou tag que deseja sincronizar
     helm:
       valueFiles:
